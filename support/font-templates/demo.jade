@@ -50,9 +50,60 @@ html
           display inline
       .i-code
         display none
+
+    - var rnd = Math.floor(Math.random()*100000000);
+    | @font-face {
+    |   font-family: '#{font.fontname}';
+    |   src: url('./font/#{font.fontname}.eot?#{rnd}');
+    |   src: url('./font/#{font.fontname}.eot?#{rnd}#iefix') format('embedded-opentype'),
+    |        url('./font/#{font.fontname}.woff?#{rnd}') format('woff'),
+    |        url('./font/#{font.fontname}.ttf?#{rnd}') format('truetype'),
+    |        url('./font/#{font.fontname}.svg?#{rnd}##{font.fontname}') format('svg');
+    |   font-weight: normal;
+    |   font-style: normal;
+    | }
+    | 
+    | 
+    | .demo-icon
+    | {
+    |   font-family: "#{font.fontname}";
+    |   font-style: normal;
+    |   font-weight: normal;
+    |   speak: none;
+    | 
+    |   display: inline-block;
+    |   text-decoration: inherit;
+    |   width: 1em;
+    |   margin-right: .2em;
+    |   text-align: center;
+    |   /* opacity: .8; */
+    | 
+    |   /* For safety - reset parent styles, that can break glyph codes*/
+    |   font-variant: normal;
+    |   text-transform: none;
+    | 
+    |   /* fix buttons height, for twitter bootstrap */
+    |   line-height: 1em;
+    | 
+    |   /* Animation center compensation - margins should be symmetric */
+    |   /* remove if not needed */
+    |   margin-left: .2em;
+    | 
+    |   /* You can be more comfortable with increased icons size */
+    |   /* font-size: 120%; */
+    | 
+    |   /* Font smoothing. That was taken from TWBS */
+    |   -webkit-font-smoothing: antialiased;
+    |   -moz-osx-font-smoothing: grayscale;
+    | 
+    |   /* Uncomment for 3D effect */
+    |   /* text-shadow: 1px 1px 1px rgba(127, 127, 127, 0.3); */
+    | }
+    | 
+
     != '</style>'
 
-    link(rel='stylesheet', href='css/#{font.fontname}.css')
+    //- link(rel='stylesheet', href='css/#{font.fontname}.css')
     link(rel='stylesheet', href='css/animation.css')
     <!--[if IE 7]><link rel="stylesheet" href="css/#{font.fontname}-ie7.css"><![endif]-->
 
@@ -92,7 +143,10 @@ html
 
             - var code = g.code.toString(16)
               .the-icons(class=col_class, title='Code: 0x#{code}')
-                i(class=css_class)
+                i(
+                  class='demo-icon'
+                  class=css_class
+                ) !{'&#x' + code + ';'}
                 |  
                 span.i-name #{css_name}
                 span.i-code 0x#{code}

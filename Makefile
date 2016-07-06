@@ -22,7 +22,7 @@ FONTS         += linecons.font
 FONTS         += websymbols-uni.font
 FONT_CONFIGS   = $(foreach f,$(FONTS),src/${f}/config.yml)
 
-FONT_DIR 			= ./assets/embedded_fonts
+FONT_DIR 			= ./client/lib/embedded_fonts/font
 
 help:
 	echo "make help           - Print this help"
@@ -33,7 +33,7 @@ help:
 
 
 rebuild:
-	mkdir -p assets/embedded_fonts
+	mkdir -p $(FONT_DIR)
 	# build single font
 	./build_embedded_fonts.js \
 		-i $(foreach f,$(FONTS), ./src/${f}) \
@@ -47,41 +47,17 @@ rebuild:
 	./node_modules/.bin/ttf2woff "$(FONT_DIR)/fontello.ttf" "$(FONT_DIR)/fontello.woff"
 
 
-dev-server:
-	if test ! `which inotifywait` ; then \
-		echo "You need 'inotifywait' installed in order to run dev-server." >&2 ; \
-		echo "   sudo apt-get install inotify-tools" >&2 ; \
-		exit 128 ; \
-		fi
-	./support/forever.sh
-
-
 repl:
-	if test ! `which socat` ; then \
-		echo "You need `socat` installed in order to run repl." >&2 ; \
-		echo "   sudo apt-get install socat" >&2 ; \
-		exit 128 ; \
-		fi
-	if test ! -e ./tmp/fontello-repl.sock ; then \
-		echo "You need to start fontello server with --repl." >&2 ; \
-		echo "   ./fontello server --repl" >&2 ; \
-		exit 128 ; \
-		fi
-	socat - UNIX:./tmp/fontello-repl.sock
+	rlwrap socat ./repl.sock stdin
 
 
 lint:
-	if test ! `which jshint` ; then \
-		echo "You need 'jshint' installed in order to run lint." >&2 ; \
-		exit 128 ; \
-		fi
-	jshint . --show-non-errors
+	eslint .
 
 
 cleanup:
 	# cleanup assets
-	rm -rf public/assets
-	rm -rf .cache
+	rm -rf assets/cache
 
 # needed for travis
 setup:
@@ -103,7 +79,7 @@ todo:
 
 #FONTELLO_HOST ?= http://fontello.com
 FONTELLO_HOST ?= http://localhost:3000
-FONTELLO_DIR  ?= ./assets/icons/src
+FONTELLO_DIR  ?= ./client/lib/icons/src
 
 
 fontopen:

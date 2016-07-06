@@ -1,0 +1,92 @@
+@import "../_variables"
+
+
+body
+  padding-top 180px // make the container go all the way to the bottom of the topbar
+  padding-bottom 30px
+  min-width 700px
+
+
+.layout__fixed
+  min-width 700px
+  position fixed
+  top 0
+  width 100%
+  background-color #fff
+  box-shadow 0 0 3px 5px #fff;
+  z-index 10
+
+  // Correct notifications location
+  .layout__navbar .container
+    position relative
+  .notifications
+    top 160px
+    position absolute
+
+.layout__navbar
+  box-shadow 0 1px 3px rgba(0, 0, 0, 0.05)
+  margin-bottom 0
+
+
+.drop-progress
+  background-color #ffd
+
+
+
+
+// Social buttons
+//
+iframe
+  &.twitter-follow-button
+  &.twitter-share-button
+    margin-left 10px
+    margin-top 15px
+
+.gplus > div
+  top 9px
+  position relative
+
+.nav
+  .twitter-follow-button
+  .twitter-share-button
+  .gplus
+  .FlattrButton
+    transition: opacity .5s ease;
+    opacity: .6
+
+.nav:hover
+  .twitter-follow-button
+  .twitter-share-button
+  .gplus
+  .FlattrButton
+    opacity: 1
+
+// We like to hide ugly file input, but can't use display:none, because
+// Chromium will miss events. So, use .invisible, but position out of screen
+//
+input[type="file"].invisible
+  position absolute
+  left -10000px
+
+// "No JS" message styles
+//
+.nojs
+.nocookies
+  display none
+  left 50%
+  width 500px
+  margin-left -250px
+  text-align center
+  position absolute
+  top 90px
+  font-size 24px
+  font-weight bold
+  line-height 1.4em
+  z-index: 1000
+
+.no-js .nojs
+.no-cookies .nocookies
+  display block
+
+p.note
+  color #888
